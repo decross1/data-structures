@@ -17,6 +17,14 @@ Graph.prototype.addNode = function(node) {
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
 Graph.prototype.contains = function(node) {
+  // iterate through storage
+  for (var storageKeys in this.storage) {
+    // if (a key is equal to node)
+    if (this.storage[storageKeys].value === node) {
+      return true;
+    }
+  }
+  return false;
 };
 
 // Removes a node from the graph.
@@ -26,26 +34,36 @@ Graph.prototype.removeNode = function(node) {
   // Loop through edgesOfNode
   for (var i = 0; i < edgesOfNode.length; i++) {
     // call removeEdge on each child
-    removeEdge(node, edgesOfNode[i]);
+    this.removeEdge(node, edgesOfNode[i]);
   }
-  delete this.storge[node];
+  delete this.storage[node];
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
 Graph.prototype.hasEdge = function(fromNode, toNode) {
+  // store edges array for each input
+  var edgesOfFromNode = this.storage[fromNode].edges;
 
+  // run indexOf to check if each "edgesArray" has the opposing nodes value toNode
+  if (edgesOfFromNode.indexOf(toNode) >= 0) {
+    return true;
+    
+  // return boolean true if indexOf is not -1, else false
+  }
+  return false; 
 };
 
 // Connects two nodes in a graph by adding an edge between them.
 Graph.prototype.addEdge = function(fromNode, toNode) {
   // check if fromNode's edges contain toNode 
   var hasEdge = this.hasEdge(fromNode, toNode);
+  // false
   // if no
-  if (hasEdge) {
+  if (!hasEdge) {
     // push toNode into fromNodes.edges
-    this.storage[fromNode][edges].push(toNode);
+    this.storage[fromNode]['edges'].push(toNode);
   // repeat reversed
-    this.storage[toNode][edges].push(fromNode);
+    this.storage[toNode]['edges'].push(fromNode);
   }
 };
 
@@ -62,6 +80,11 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
+  // iterate through storage 
+  _.each(this.storage, function (item) {
+    // run function cb(item.value) 
+    cb(item.value);  
+  });
 };
 
 
