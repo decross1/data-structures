@@ -12,7 +12,7 @@ Graph.prototype.addNode = function(node) {
     edges: []
   };
 
-  this.storage[value] = newNode;
+  this.storage[node] = newNode;
 };
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
@@ -52,13 +52,12 @@ Graph.prototype.addEdge = function(fromNode, toNode) {
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode) {
   // store two variables edgesOfFromNode, edgesOfToNode
-  // var = this.storage[xxxx].edges; 
-  // remove fromNode from edgesOfToNode
-    // use indexOf to find index within edgesOf
-    // use splice to cut it out. 
-  arrayName.splice(index, 1);
-  // repeat for reverse. 
- 
+  var edgesOfFromNode = this.storage[fromNode].edges;
+  var edgesOfToNode = this.storage[toNode].edges;
+
+  // remove the edges from each parameter node 
+  edgesOfFromNode.splice(edgesOfFromNode.indexOf(toNode), 1);
+  edgesOfToNode.splice(edgesOfToNode.indexOf(fromNode), 1);
 };
 
 // Pass in a callback which will be executed on each node of the graph.
