@@ -25,18 +25,23 @@ var treeMethods = {
 
     // set up a var targetFound to false
     var targetFound = false;
-    
+    // refactor -> delete our tf variable
+
     console.log('target_before:', targetFound, 'obj:', this);
   
     // if this.value is equal to the target
     if (this.value === target) {
       targetFound = true;
+      return targetFound;
+      // refactor -> return true;
     // else check to see if this has any children
     } else if (this.children.length > 0) {
       // iterate through every child
       for (var i = 0; i < this.children.length; i++) {
         if (this.children[i].contains(target) === true) {
           targetFound = true;
+          return targetFound;
+          //  refactor -> return true;
         }
       }
     }
@@ -44,7 +49,7 @@ var treeMethods = {
     console.log('target_after:', targetFound, 'obj:', this);
 
     return targetFound;
-
+    //  refactor ->  return false;
   }, 
 
   createNode: function(value) {
