@@ -33,27 +33,29 @@ BinarySearchTree.prototype.insert = function(insertValue) {
   // create function called walkAndAdd(tree)
   
   var walkAndAdd = function(tree) {
-    // compare insertValue to this.value
-    // if this.value > insertValue
-    if (tree.value < insertValue) {
-      // is this.right not null
-      if (!tree.right) {
-        // this.right = newnode(insertValue)
-        tree.right = Tree(insertValue);
-      // else
-      } else {
-        // walkAndAdd(this.right)
-        walkAndAdd(tree.right);
-      }
-    } else if (tree.value > insertValue) {
+
+    if (tree.value > insertValue) {
       // is this.right not null
       if (!tree.left) {
         // this.left = newnode(insertValue)
-        tree.left = Tree(insertValue);
+        tree.left = BinarySearchTree(insertValue);
       // else
       } else {
         // walkAndAdd(this.left)
         walkAndAdd(tree.left);
+      }
+    // compare insertValue to this.value
+    // if this.value > insertValue
+    } else if (tree.value < insertValue) {
+      // is this.right not null
+      if (!tree.right) {
+        // this.right = newnode(insertValue)
+        tree.right = BinarySearchTree(insertValue);
+      //   debugger;
+      // else
+      } else {
+        // walkAndAdd(this.right)
+        walkAndAdd(tree.right);
       }
     }
   };
@@ -62,16 +64,17 @@ BinarySearchTree.prototype.insert = function(insertValue) {
 };
 
 BinarySearchTree.prototype.depthFirstLog = function(cb) {
-
-
-};
-
-BinarySearchTree.prototype.makeNewTreeNode = function(value) {
-  return {
-    value: value,
-    left: null,
-    right: null
-  };
+  // Do callback on Value
+  cb(this.value);
+  
+  // If there's a left node, run DFL on left
+  if (this.left) {
+    this.depthFirstLog.call(this.left, cb);
+  }
+  // If there's a right node, run DFL on right  
+  if (this.right) {
+    this.depthFirstLog.call(this.right, cb);
+  }
 };
 
 /*
