@@ -77,6 +77,73 @@ BinarySearchTree.prototype.depthFirstLog = function(cb) {
   }
 };
 
+BinarySearchTree.prototype.breadthFirstLog = function(cb) {
+  // Instantiate an empty queue in the pseudoclassical style
+  // Call it breadthQueue
+  var breadthQueue = new QueueLocal();
+  
+
+  // Create an inner function called traverse
+  var traverse = function(tree) {
+    // debugger;
+    // Run callback on this.value
+    cb(tree.value);
+    // If the tree has a left (this.left)
+    if (tree.left) {
+      // Enqueue the left 
+      breadthQueue.enqueue(tree.left);    
+    }
+    // If the tree has a right
+    if (tree.right) {
+      //Enqueue the right    
+      breadthQueue.enqueue(tree.right);
+    }
+
+    if (breadthQueue.size() > 0) {
+      traverse(breadthQueue.dequeue());   
+    }
+  };
+
+  traverse(this);
+
+  // Is the Queue.size greater than 0? 
+  // If so, call traverse on the next dequeue item 
+
+
+};
+
 /*
  * Complexity: What is the time complexity of the above functions?
  */
+
+var QueueLocal = function() {
+  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
+  // but try not not reference your old code in writing the new style.
+  this.storage = {};
+  this.queueLen = 0;
+  this.tailIndex = 0;
+};
+
+QueueLocal.prototype.enqueue = function (value) {
+  this.storage[this.tailIndex] = value;
+  this.tailIndex += 1; 
+  this.queueLen += 1;  
+};
+
+QueueLocal.prototype.dequeue = function () {
+  if (this.queueLen === 0) {
+    return undefined;
+  } else if (this.queueLen > 0) {
+    var removedValue = this.storage[this.tailIndex - this.queueLen];
+    delete this.storage[this.tailIndex - this.queueLen];
+    this.queueLen -= 1;
+    return removedValue;
+  }
+};
+
+QueueLocal.prototype.size = function () {
+  debugger;
+  return this.queueLen;
+};
+
+
