@@ -15,13 +15,13 @@ BinarySearchTree.prototype.contains = function(target) {
   } else if (target > this.value && this.right) {
   // else if (this.value > target) and this.right is not null 
     //  if contains(this.right) is true, return true 
-    if (this.contains.call(this.right, target)) {
+    if (this.right.contains(target)) {
       return true;
     }
   } else if (target < this.value && this.left) {
   // else if (this.value < target) and this.left is not null 
     //  if contains(this.left) is true, return true 
-    if (this.contains.call(this.left, target)) {
+    if (this.left.contains(target)) {
       return true;
     }
   }
@@ -30,37 +30,29 @@ BinarySearchTree.prototype.contains = function(target) {
 };
 
 BinarySearchTree.prototype.insert = function(insertValue) {
-  // create function called walkAndAdd(tree)
   
-  var walkAndAdd = function(tree) {
-
-    if (tree.value > insertValue) {
-      // is this.right not null
-      if (!tree.left) {
-        // this.left = newnode(insertValue)
-        tree.left = BinarySearchTree(insertValue);
-      // else
-      } else {
-        // walkAndAdd(this.left)
-        walkAndAdd(tree.left);
-      }
-    // compare insertValue to this.value
-    // if this.value > insertValue
-    } else if (tree.value < insertValue) {
-      // is this.right not null
-      if (!tree.right) {
-        // this.right = newnode(insertValue)
-        tree.right = BinarySearchTree(insertValue);
-      //   debugger;
-      // else
-      } else {
-        // walkAndAdd(this.right)
-        walkAndAdd(tree.right);
-      }
+  if (this.value > insertValue) {
+    // is this.right not null
+    if (!this.left) {
+      // this.left = newnode(insertValue)
+      this.left = BinarySearchTree(insertValue);
+    // else
+    } else {
+      this.left.insert(insertValue);
     }
-  };
+  // compare insertValue to this.value
+  // if this.value > insertValue
+  } else if (this.value < insertValue) {
+    // is this.right not null
+    if (!this.right) {
+      // this.right = newnode(insertValue)
+      this.right = BinarySearchTree(insertValue);
+    // else
+    } else {
+      this.right.insert(insertValue);
+    }
+  }
 
-  walkAndAdd(this);
 };
 
 BinarySearchTree.prototype.depthFirstLog = function(cb) {
@@ -69,11 +61,11 @@ BinarySearchTree.prototype.depthFirstLog = function(cb) {
   
   // If there's a left node, run DFL on left
   if (this.left) {
-    this.depthFirstLog.call(this.left, cb);
+    this.left.depthFirstLog(cb);
   }
   // If there's a right node, run DFL on right  
   if (this.right) {
-    this.depthFirstLog.call(this.right, cb);
+    this.right.depthFirstLog(cb);
   }
 };
 
@@ -81,11 +73,9 @@ BinarySearchTree.prototype.breadthFirstLog = function(cb) {
   // Instantiate an empty queue in the pseudoclassical style
   // Call it breadthQueue
   var breadthQueue = new QueueLocal();
-  
 
   // Create an inner function called traverse
   var traverse = function(tree) {
-    // debugger;
     // Run callback on this.value
     cb(tree.value);
     // If the tree has a left (this.left)
@@ -98,27 +88,38 @@ BinarySearchTree.prototype.breadthFirstLog = function(cb) {
       //Enqueue the right    
       breadthQueue.enqueue(tree.right);
     }
-
+    // Is the Queue.size greater than 0? 
+    // If so, call traverse on the next dequeue item 
     if (breadthQueue.size() > 0) {
       traverse(breadthQueue.dequeue());   
     }
   };
 
   traverse(this);
-
-  // Is the Queue.size greater than 0? 
-  // If so, call traverse on the next dequeue item 
-
-
 };
 
 /*
  * Complexity: What is the time complexity of the above functions?
+Balanced: 
+  1. Contains: logarithmic O(log n)
+  2. Inserts: logarithmic O(log n) 
+  3. Operate on all item: Breadth and Depth Logs: Linear O(n)
+
+Unbalanced:
+  1. Contains: linear
+  2. Inserts: linear
+
+Complete.
+*/
+
+/*
+ * TODO: 
+- If time allows, figure out how to reference the Queue file without
+copying
+- Determine if we can run BFL recursively without an inner function 
  */
 
 var QueueLocal = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
   this.storage = {};
   this.queueLen = 0;
   this.tailIndex = 0;
@@ -145,5 +146,7 @@ QueueLocal.prototype.size = function () {
   debugger;
   return this.queueLen;
 };
+
+
 
 

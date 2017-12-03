@@ -63,4 +63,10 @@ var Node = function(value) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
- */
+1. Add Tail: O(1)
+2. Remove Head: O(1)
+3. Insertion before: O(n)
+4. Insertion after: O(1)
+5. contains: O(n) 
+Complete.
+*/

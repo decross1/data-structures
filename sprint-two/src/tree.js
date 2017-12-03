@@ -11,24 +11,21 @@ var Tree = function(value) {
 var treeMethods = {
   addChild: function(value) {
     // declare a function to create a node
-  // with the value and children properties. 
+    // with the value and children properties. 
 
     // create a newNode variable, equal to a call to Node();
     var newNode = this.createNode(value);
   
-  // push newNode into the children array of 'this'
-  // we believe this refers to the object that .addChild was called on, e.g. tree.children[0].addChild;
+    // push newNode into the children array of 'this'
+    // we believe this refers to the object that .addChild was called on, e.g. tree.children[0].addChild;
     this.children.push(newNode);
   },
 
   contains: function(target) {
-
     // set up a var targetFound to false
     var targetFound = false;
     // refactor -> delete our tf variable
 
-  
-  
     // if this.value is equal to the target
     if (this.value === target) {
       targetFound = true;
@@ -46,8 +43,6 @@ var treeMethods = {
       }
     }
 
-
-
     return targetFound;
     //  refactor ->  return false;
   }, 
@@ -61,10 +56,9 @@ var treeMethods = {
   }
 };
 
-
-
-
-
 /*
  * Complexity: What is the time complexity of the above functions?
+  1. contains: O(n) - linear
+  2. addChild: O(1) - constant
+
  */

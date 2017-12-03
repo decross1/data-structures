@@ -12,7 +12,7 @@ HashTable.prototype.insert = function(k, v) {
   // check items at index and store in var itemsAtIndex
   var numOfItems = this.itemsAtIndex(index);
   // if items = 0
-//  debugger;
+
   if (numOfItems === 0) { 
     // make this._storage[index] = insertArray
     this._storage[index] = insertArray; 
@@ -50,7 +50,7 @@ HashTable.prototype.insert = function(k, v) {
 
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  console.log(this._storage);
+ // console.log(this._storage);
   // check number of items at Index
 //  debugger;
   var numOfItems = this.itemsAtIndex(index);
@@ -117,6 +117,12 @@ HashTable.prototype.itemsAtIndex = function(index) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
- */
+ 1. Insert: 
+    - worst case linear O(n) - if your hashing function distributes poorly
+    - best case with a good hash is constant
+  2. Retrieve: same as above
+  3. Remove: worst case linear, best case constant
+Complete.
+*/
 
 

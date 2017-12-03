@@ -37,4 +37,7 @@ setPrototype.remove = function(item) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+1. add: O(n) - linear 
+2. remove: O(n) - linear (has 2n)
+3. contains: O(n) - linear 
  */
